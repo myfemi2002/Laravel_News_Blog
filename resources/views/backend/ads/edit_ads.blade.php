@@ -1,0 +1,88 @@
+@extends('admin.admin_master')
+@section('title', 'Edit Ads Page')
+@section('admin')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="javascript:void(0);">Welcome To News Portal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fa fa-align-justify"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <a href="{{ url('/') }}" target="blank"><button class="btn btn-outline-light btn-rounded get-started-btn">Visit Frontend</button></a>
+        </form>
+    </div>
+</nav>
+<div class="container-fluid">
+    <!-- Advanced Select2 -->
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>@yield('title')</h2>
+                </div>
+                <div class="body">
+                    <form class="forms-sample" method="POST" action="{{ route('ads.update',$edit_ads->id) }}" enctype="multipart/form-data">@csrf
+                        <div class="row clearfix">
+
+
+                            <div class="col-md-6">
+                                <label class="col-form-label">Ads Link <span class="text-danger">*</span></label>
+                                <div class="form-group">
+                                    <input  type="text" name="link" class="form-control"   value="{{ $edit_ads->link }}"  autofocus>
+                                    <small class="form-control-feedback">
+                                    @error('link')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    </small>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label class="col-form-label">Ads Type<span class="text-danger">*</span></label>
+                                <div class="form-group">
+                                    <select name="type" class="form-control"  >
+                                        <option value="" selected="" disabled="">-- Select --</option>
+                                        <option value="1" {{ ($edit_ads->type == "1" ? "selected": "") }}>Vertical Ads  </option>
+                                        <option value="2" {{ ($edit_ads->type == "2" ? "selected": "") }}>Horizontal Ads </option>
+                                    </select>
+                                    <small class="form-control-feedback">
+                                    @error('type')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label">News Image Upload<span class="text-danger">*</span></label>
+                                <div  class="custom-file">
+                                    <input type="file" name="ads" class="form-control" >
+                                    <small class="form-control-feedback">
+                                    @error('ads')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="col-form-label">Old Image<span class="text-danger">*</span></label>
+                                <div  class="custom-file">
+                                    <img src="{{ URL::to($edit_ads->ads)  }}" style="width: 70px; height: 50px;">
+                                    <input type="hidden" name="oldimage" value="{{ $edit_ads->ads }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2 mt-4">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
